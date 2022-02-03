@@ -21,9 +21,11 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body class="font-sans antialiased">
-        <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
+          <a href="/" class="z-20 bg-blue-800 text-white font-semibold fixed top-0 left-0 py-4 pl-3 pr-8 rounded-br-full">
+            <i class="fas fa-home"></i> Home
+          </a>
             <!-- Page Content -->
             <main>
                 {{ $slot }}

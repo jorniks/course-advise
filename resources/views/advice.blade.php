@@ -36,10 +36,10 @@
         <div class="">
           Hello <span x-text="studentName"></span>,
           <p class="py-3">
-            After analyzing your performance over the course of four (4) semesters, it is observed that you perform better in courses related to {{ $gradeScoreValues['course'] }}. Therefore you are adviced to go for {{ $gradeScoreValues['course'] }} related courses such as {{ $gradeScoreValues['suggestion1'] }} or {{ $gradeScoreValues['suggestion2'] }}.
+            After analyzing your performance over the course of four (4) semesters, it is observed that you perform better in courses related to {{ $gradeScoreValues['course'] }}. Based on your Average point {{ $gradeScoreValues['suggestion1'] }} or {{ $gradeScoreValues['suggestion2'] }} is the best option for your HND program.
           </p>
           <p class="">
-            With an average score of {{ $gradeScoreValues['unitScore'] }} units in {{ $gradeScoreValues['course'] }}, diligently consider the suggested courses above and go for one that best suits your inner drive.
+            With an average score of {{ $gradeScoreValues['unitScore'] }} units in {{ $gradeScoreValues['course'] }}, diligently consider the recommended courses above and go for one that best suits your inner drive.
           </p>
           <p class="py-3 sm:text-right font-bold uppercase">
             Best Wishes

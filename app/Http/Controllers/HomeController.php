@@ -68,7 +68,7 @@ class HomeController extends Controller {
       'unitScore' => 0,
       'course' => 'Physics',
       'suggestion1' => 'PHYSICS',
-      'suggestion2' => 'ELECTRONIC',
+      'suggestion2' => 'ELECTRONICS',
 
       'bio' => [ 'unitScore' => 0, 'course' => 'Biology' ],
       'chem' => [ 'unitScore' => 0, 'course' => 'Chemistry' ],
@@ -91,13 +91,6 @@ class HomeController extends Controller {
     ],
   ];
 
-
-  public $gradeScoreValue = [
-    'bio' => 0,
-    'phy' => 0,
-    'gen' => 0,
-    'chem' => 0
-  ];
 
 
   public $coursesArray = [

@@ -10,9 +10,6 @@
           <div class="grid gap-y-5" data-aos="zoom-in">
             <a href="{{url('/recommendation')}}" class="bg-blue-600 px-6 py-3 text-white font-semibold text-center rounded-md">Get Recommendation</a>
             <a href="{{url('/search')}}" class="bg-blue-600 px-6 py-3 text-white font-semibold rounded-md text-center">Search Results</a>
-            @if(session()->has('toastSuccess'))
-              {!! session()->get('toastSuccess') !!}
-            @endif
           </div>
         @endif
 

@@ -119,7 +119,7 @@
             <div class="flex justify-between items-center my-8">
               <label @click="yearPanel = 1" class="ring-1 ring-blue-600 px-8 py-2 rounded text-blue-600">Previous</label>
               
-              <label @click="yearPanel = 3" class="bg-blue-600 px-8 py-2 rounded text-white">Next</label>
+              <button class="bg-blue-500 hover:bg-blue-600 duration-300 px-8 py-2 rounded text-white font-bold">Submit</button>
             </div>
           </div>
         </section>

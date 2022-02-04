@@ -14,8 +14,6 @@ class GetRecommendation extends Component {
     if(!empty($this->studentCode) && strlen($this->studentCode) >= 10) {
       $result = Recommendation::where('uniqueID', $this->studentCode)->get();
 
-      // dd(count($result));
-// GSLTR20221
       if(count($result) < 1) {
         $this->resultExists = false;
       } else {

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Recommendation;
+
 
 class HomeController extends Controller {
   
@@ -19,7 +21,8 @@ class HomeController extends Controller {
   public function submitCourses(Request $request) {
     $sortedArray = $request->all();
     ksort($sortedArray);
-    $valuesForChart = ['chemValue' => 0, 'bioValue' => 0, 'phyValue' => 0];
+    $counter = 1;
+    $token = '';
     
     foreach($sortedArray as $arrayKey => $arrayItem) {
       $courseSection = strtolower(explode('_', $arrayKey)[0]);
@@ -34,7 +37,6 @@ class HomeController extends Controller {
         $this->courseDetails[$key]['roundedScore'] += (int)round($this->courseDetails[$key]['unitScore'] + $this->courseDetails['gen']['unitScore']);
 
         $this->courseDetails[$key]['unitScore'] += $this->courseDetails['gen']['unitScore'];
-        $valuesForChart[$key.'Value'] = $this->courseDetails[$key]['unitScore'];
       }
     }
 
@@ -42,14 +44,36 @@ class HomeController extends Controller {
     $highestScoreCourse = $flippedScores[max(array_keys($flippedScores))];
 
 
-    array_walk($this->courseDetails[$highestScoreCourse], function($value, $key) use ($highestScoreCourse) {
+    array_walk($this->courseDetails[$highestScoreCourse], function($value, $key) use ($highestScoreCourse, $counter) {
       if(is_array($value)) {
-        $this->courseDetails[$highestScoreCourse][$key]['unitScore'] = $this->courseDetails[$key]['unitScore'];
+        $courseCode = $this->courseDetails[$highestScoreCourse][$key]['code'];
+
+        $this->courseDetails[$highestScoreCourse][$key]['unitScore'] = $this->courseDetails[$courseCode]['unitScore'];
       }
     });
 
+    
+    if(!$request->session()->exists('token') || ($request->session()->get('token') !== $request->input('_token'))) {
+      $saveRecommendation = new Recommendation();
+      $saveRecommendation->mainCourse = $this->courseDetails[$highestScoreCourse]['course'];
+      $saveRecommendation->mainCourseScore = $this->courseDetails[$highestScoreCourse]['unitScore'];
+      $saveRecommendation->suggestion1 = $this->courseDetails[$highestScoreCourse]['courseSuggestion1']['course'];
+      $saveRecommendation->suggestion1Score = $this->courseDetails[$highestScoreCourse]['courseSuggestion1']['unitScore'];
+      $saveRecommendation->suggestion2 = $this->courseDetails[$highestScoreCourse]['courseSuggestion2']['course'];
+      $saveRecommendation->suggestion2Score = $this->courseDetails[$highestScoreCourse]['courseSuggestion2']['unitScore'];
+      $saveRecommendation->save();
 
-    return view('advice', ['valuesForChart' => $valuesForChart, 'gradeScoreValues' => $this->courseDetails[$highestScoreCourse]]);
+      $uniqueID = 'GSLTR'. date('Y', time()) . $saveRecommendation->id;
+      session(['personID' => $uniqueID]);
+
+      $saveRecommendation->uniqueID = $uniqueID;
+      $saveRecommendation->save();
+    }
+
+    session(['token' => $request->input('_token')]);
+
+
+    return view('advice', ['uniqueID' => $request->session()->get('personID'), 'gradeScoreValues' => $this->courseDetails[$highestScoreCourse]]);
   }
 
 
@@ -62,8 +86,8 @@ class HomeController extends Controller {
       'suggestion1' => 'BIOLOGY',
       'suggestion2' => 'MICROBIOLOGY',
 
-      'chem' => [ 'unitScore' => 0, 'course' => 'Chemistry' ],
-      'phy' => [ 'unitScore' => 0, 'course' => 'Physics' ],
+      'courseSuggestion1' => [ 'code' => 'chem', 'unitScore' => 0, 'course' => 'Chemistry' ],
+      'courseSuggestion2' => [ 'code' => 'phy', 'unitScore' => 0, 'course' => 'Physics' ],
     ],
     
     'phy' => [
@@ -74,8 +98,8 @@ class HomeController extends Controller {
       'suggestion1' => 'PHYSICS',
       'suggestion2' => 'ELECTRONICS',
 
-      'bio' => [ 'unitScore' => 0, 'course' => 'Biology' ],
-      'chem' => [ 'unitScore' => 0, 'course' => 'Chemistry' ],
+      'courseSuggestion1' => [ 'code' => 'bio', 'unitScore' => 0, 'course' => 'Biology' ],
+      'courseSuggestion2' => [ 'code' => 'chem', 'unitScore' => 0, 'course' => 'Chemistry' ],
     ],
     
     'chem' => [
@@ -86,8 +110,8 @@ class HomeController extends Controller {
       'suggestion1' => 'CHEMISTRY',
       'suggestion2' => 'BIOCHEMISTRY',
 
-      'bio' => [ 'unitScore' => 0, 'course' => 'Biology' ],
-      'phy' => [ 'unitScore' => 0, 'course' => 'Physics' ],
+      'courseSuggestion1' => [ 'code' => 'bio', 'unitScore' => 0, 'course' => 'Biology' ],
+      'courseSuggestion2' => [ 'code' => 'phy', 'unitScore' => 0, 'course' => 'Physics' ],
     ],
     
     'gen' => [

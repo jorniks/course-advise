@@ -30,6 +30,9 @@
             ?>
           </section>
         </div>
+        <div class="py-3 text-red-500">
+          Use <span class="font-black">{{ $uniqueID }}</span> to check this recommendation next time.
+        </div>
       </section>
 
       <section class="sm:col-span-7 p-4 sm:px-24 bg-gray-200 flex items-center">
@@ -57,10 +60,10 @@
     const configDoughnut = {
       type: "doughnut",
       data: {
-        labels: ["Biology", "Chemistry", "Physics"],
+        labels: ["{{ $gradeScoreValues['course'] }}", "{{ $gradeScoreValues['courseSuggestion1']['course'] }}", "{{ $gradeScoreValues['courseSuggestion2']['course'] }}"],
         datasets: [{
           backgroundColor: [ "Green", "Yellow", "Red" ],
-          data: [{{ $valuesForChart['bioValue'] }}, {{ $valuesForChart['chemValue'] }}, {{ $valuesForChart['phyValue'] }}],
+          data: [{{ $gradeScoreValues['unitScore'] }}, {{ $gradeScoreValues['courseSuggestion1']['unitScore'] }}, {{ $gradeScoreValues['courseSuggestion2']['unitScore'] }}],
           hoverOffset: 20,
         }],
       },

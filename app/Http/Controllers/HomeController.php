@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 class HomeController extends Controller {
   
   public function index() {
-    
-    return view('home', ['coursesArray' => $this->coursesArray]);
+    return view('home');
+  }
+
+
+  public function getRecommendation() {
+    return view('courses', ['coursesArray' => $this->coursesArray]);
   }
 
 

@@ -15,4 +15,6 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/recommendation', [HomeController::class, 'getRecommendation']);
+
 Route::post('/advice', [HomeController::class, 'submitCourses'])->name('submitCourses');

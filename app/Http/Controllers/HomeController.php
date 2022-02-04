@@ -8,14 +8,42 @@ use App\Models\Recommendation;
 
 class HomeController extends Controller {
   
-  public function index() {
+  public function index(Request $request) {
     return view('home');
   }
+  
 
 
-  public function getRecommendation() {
+  public function getResult(Request $request) {
+    $result = Recommendation::where('uniqueID', $request->input('studentCode'))->get();
+    
+    if($result->count() === 1) {
+      $gradeScoreValues = [
+        'courseKey' => $result[0]->mainCourse,
+        'unitScore' => $result[0]->mainCourseScore,
+        'course' => $this->courseDetails[$result[0]->mainCourse]['course'],
+        'suggestion1' => $this->courseDetails[$result[0]->mainCourse]['suggestion1'],
+        'suggestion2' => $this->courseDetails[$result[0]->mainCourse]['suggestion2'],
+
+        'courseSuggestion1' => [ 'unitScore' => $result[0]->suggestion1Score, 'course' => $this->courseDetails[$result[0]->suggestion1]['course'] ],
+        'courseSuggestion2' => [ 'unitScore' => $result[0]->suggestion2Score, 'course' => $this->courseDetails[$result[0]->suggestion2]['course'] ],
+      ];
+
+      return view('advice', ['uniqueID' => $request->input('studentCode'), 'gradeScoreValues' => $gradeScoreValues]);
+    }
+
+    return redirect('/search')->with('toastError', 'The entered student code does not exist!');
+
+  }
+
+
+
+
+  public function getCoursesForm() {
     return view('courses', ['coursesArray' => $this->coursesArray]);
   }
+
+
 
 
   public function submitCourses(Request $request) {

@@ -28,10 +28,12 @@
 
   <body class="font-sans antialiased">
 
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-gray-100 relative">
       <a href="/" class="z-20 bg-blue-800 text-white font-semibold fixed top-0 left-0 py-4 pl-3 pr-8 rounded-br-full">
         <i class="fas fa-home"></i> Home
       </a>
+      
+      <img src="{{url('fptb-logo.png')}}" alt="Poly Logo" class="h-16 absolute right-0 rounded-bl-3xl z-10" data-aos="fade-up-right"/>
         <!-- Page Content -->
         <main>
           {{ $slot }}
@@ -67,3 +69,31 @@
 
   </body>
 </html>
+
+@if(session()->has('toastSuccess'))
+  <script>
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.success("{!! session()->get('toastSuccess') !!}")
+  </script>
+@endif
+
+@if(session()->has('toastInfo'))
+  <script>
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.info("{!! session()->get('toastInfo') !!}")
+  </script>
+@endif
+
+@if(session()->has('toastWarning'))
+  <script>
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.warning("{!! session()->get('toastWarning') !!}")
+  </script>
+@endif
+
+@if(session()->has('toastError'))
+  <script>
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.error("{!! session()->get('toastError') !!}")
+  </script>
+@endif

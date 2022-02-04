@@ -30,7 +30,7 @@
             ?>
           </section>
         </div>
-        <div class="py-3 text-red-500">
+        <div class="py-3 text-red-600">
           Use <span class="font-black">{{ $uniqueID }}</span> to check this recommendation next time.
         </div>
       </section>

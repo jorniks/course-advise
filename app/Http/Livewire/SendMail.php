@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use Illuminate\Http\Request;
 use App\Notifications\SendResult;
 use App\Models\User;
 
@@ -19,7 +18,7 @@ class SendMail extends Component {
     return view('livewire.send-mail')->extends('layouts.app');
   }
 
-  public function sendMail(Request $request) {
+  public function sendMail() {
     $this->buttonText = 'Sending...';
     
     $user = User::firstOrNew([

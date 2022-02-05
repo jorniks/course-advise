@@ -83,11 +83,11 @@ class HomeController extends Controller {
     
     if(!$request->session()->exists('token') || ($request->session()->get('token') !== $request->input('_token'))) {
       $saveRecommendation = new Recommendation();
-      $saveRecommendation->mainCourse = $this->courseDetails[$highestScoreCourse]['course'];
+      $saveRecommendation->mainCourse = $this->courseDetails[$highestScoreCourse]['courseKey'];
       $saveRecommendation->mainCourseScore = $this->courseDetails[$highestScoreCourse]['unitScore'];
-      $saveRecommendation->suggestion1 = $this->courseDetails[$highestScoreCourse]['courseSuggestion1']['course'];
+      $saveRecommendation->suggestion1 = $this->courseDetails[$highestScoreCourse]['courseSuggestion1']['code'];
       $saveRecommendation->suggestion1Score = $this->courseDetails[$highestScoreCourse]['courseSuggestion1']['unitScore'];
-      $saveRecommendation->suggestion2 = $this->courseDetails[$highestScoreCourse]['courseSuggestion2']['course'];
+      $saveRecommendation->suggestion2 = $this->courseDetails[$highestScoreCourse]['courseSuggestion2']['code'];
       $saveRecommendation->suggestion2Score = $this->courseDetails[$highestScoreCourse]['courseSuggestion2']['unitScore'];
       $saveRecommendation->save();
 

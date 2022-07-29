@@ -10,7 +10,7 @@ use App\Models\User;
 class SendMail extends Component {
   public $gradeScoreValues,
         $studentName,
-        $studentEmail = 'dictsocial@gmail.com',
+        $studentEmail = '',
         $showEmailModal = false,
         $buttonText = 'Send to Mail';
 

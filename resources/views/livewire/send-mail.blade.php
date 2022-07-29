@@ -1,7 +1,7 @@
 <div>
 
 
-  <label class="rounded-full bg-blue-500 text-white font-semibold px-4 py-2 fixed bottom-5 sm:bottom-auto sm:top-5 right-5 cursor-pointer hover:shadow-2xl transform duration-700" @click="$wire.showEmailModal = true">Send to email</label>
+  <label class="rounded-full bg-blue-500 text-white font-semibold px-4 py-2 fixed bottom-5 right-5 cursor-pointer hover:shadow-2xl transform duration-700" @click="$wire.showEmailModal = true">Send to email</label>
 
 
   <div class="modal fixed left-0 top-0 px-3 w-full h-full justify-center items-center overflow-auto z-30 bg-gray-900 bg-opacity-20" x-transition x-bind:class="($wire.showEmailModal) ? 'flex' : 'hidden'">
